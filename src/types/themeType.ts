@@ -4,4 +4,5 @@ export interface ThemeType {
   buttonBackground: string
   buttonText: string
   headers: string
+  menu: string
 }

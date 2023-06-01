@@ -2,6 +2,7 @@ export const DarkTheme = {
   backgroundColor: '#16161a',
   textColor: '#a7a9be',
   buttonBackground: '#ff8906',
-  buttonText: '#fffffe',
+  buttonText: '#0d0d0d',
   headers: '#fffffe',
+  menu: '#FDEBD0',
 }
