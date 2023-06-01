@@ -18,7 +18,7 @@ export const styles = (theme: ThemeType) =>
     },
     textBody: {
       color: theme.textColor,
-      fontSize: 15,
+      fontSize: 18,
     },
     header: {
       height: '10%',

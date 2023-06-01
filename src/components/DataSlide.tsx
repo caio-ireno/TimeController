@@ -1,14 +1,38 @@
 import React, { useState } from 'react'
 import { Text, View } from 'react-native'
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-  State,
-} from 'react-native-gesture-handler'
+import SwipeGesture from 'react-native-swipe-gestures'
+
+import { useAppThemeContext } from '../context/ThemeContext'
+import { styles } from '../style/style'
 
 const MyComponent = () => {
   const [date, setDate] = useState(new Date())
-  const [gestureActive, setGestureActive] = useState(false)
+  const { theme } = useAppThemeContext()
+  const dynamicStyles = styles(theme)
+  const diasDaSemana = [
+    'Domingo',
+    'Segunda-feira',
+    'Terça-feira',
+    'Quarta-feira',
+    'Quinta-feira',
+    'Sexta-feira',
+    'Sábado',
+  ]
+
+  const mesesDoAno = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+  ]
 
   const handleSwipeLeft = () => {
     // Lógica para avançar para o próximo dia
@@ -24,36 +48,38 @@ const MyComponent = () => {
     setDate(previousDate)
   }
 
-  const handleGestureEvent = ({
-    nativeEvent,
-  }: PanGestureHandlerGestureEvent) => {
-    if (nativeEvent.state === State.ACTIVE) {
-      console.log(gestureActive, nativeEvent.state)
-      if (gestureActive) {
-        console.log('dentro if')
-        setGestureActive(true)
-        const { translationX } = nativeEvent
+  console.log(date.toLocaleDateString(), date.getDay())
 
-        if (translationX < -50) {
-          handleSwipeLeft()
-        } else if (translationX > 50) {
-          handleSwipeRight()
-        }
-      }
-    } else if (
-      nativeEvent.state === State.END ||
-      nativeEvent.state === State.CANCELLED
-    ) {
-      setGestureActive(false)
+  const config = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80,
+  }
+
+  const onSwipe = (gestureName: string) => {
+    switch (gestureName) {
+      case 'SWIPE_LEFT':
+        handleSwipeLeft()
+        break
+      case 'SWIPE_RIGHT':
+        handleSwipeRight()
+        break
     }
   }
 
   return (
-    <PanGestureHandler onGestureEvent={handleGestureEvent}>
-      <View style={{ backgroundColor: '#f0f', height: '100%' }}>
-        <Text>{date.toDateString()}</Text>
+    <SwipeGesture
+      onSwipe={gestureName => onSwipe(gestureName)}
+      config={config}
+      style={{ flex: 1 }}
+    >
+      <View style={{ alignItems: 'center' }}>
+        <Text style={dynamicStyles.textBody}>{`${
+          diasDaSemana[date.getDay()]
+        }, ${date.getDate()} de ${
+          mesesDoAno[date.getMonth()]
+        } de ${date.getFullYear()}`}</Text>
       </View>
-    </PanGestureHandler>
+    </SwipeGesture>
   )
 }
 
