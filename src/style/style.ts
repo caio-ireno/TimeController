@@ -7,8 +7,6 @@ export const styles = (theme: ThemeType) =>
     container: {
       flex: 1,
       paddingTop: 48,
-      height: '100%',
-      width: '100%',
       alignItems: 'center',
       backgroundColor: theme.backgroundColor,
     },
@@ -34,7 +32,6 @@ export const styles = (theme: ThemeType) =>
       paddingVertical: 20,
       height: '90%',
       width: '100%',
-      backgroundColor: theme.menu,
     },
     button: {
       width: 50,

@@ -1,10 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { AppRoutes } from './App.routes'
+
+import { AppRoutes2 } from './App2.routes'
 
 export const Routes = () => {
   return (
     <NavigationContainer>
-      <AppRoutes />
+      <AppRoutes2 />
     </NavigationContainer>
   )
 }
