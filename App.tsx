@@ -1,8 +1,12 @@
-import { Text, View } from 'react-native'
+import { AppThemeProvider } from './src/context/ThemeContext'
 import { Routes } from './src/routes'
 
 function App() {
-  return <Routes></Routes>
+  return (
+    <AppThemeProvider>
+      <Routes></Routes>
+    </AppThemeProvider>
+  )
 }
 
 export default App
