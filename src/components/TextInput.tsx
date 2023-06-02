@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-  InputAccessoryViewProps,
   StyleSheet,
   TextInput as NativeInput,
+  TextInputProps,
   View,
 } from 'react-native'
 
-interface MyInputProps extends InputAccessoryViewProps {
+interface MyInputProps extends TextInputProps {
   label: string
 }
 export const TextInput: React.FC<MyInputProps> = ({ label, ...rest }) => {

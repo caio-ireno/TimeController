@@ -1,11 +1,10 @@
+import { Moon, Sun } from 'phosphor-react-native'
 import React, { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
-import Button from '../components/Button'
 import { PageDefault } from '../components/PageDefault'
 import { useAppThemeContext } from '../context/ThemeContext'
 import { styles } from '../style/style'
-import { Moon, Sun } from 'phosphor-react-native'
 
 export function Options() {
   const [themeChange, setThemeChange] = useState(false)

@@ -4,5 +4,5 @@ export const LightTheme = {
   buttonBackground: '#ff8e3c',
   buttonText: '#0d0d0d',
   headers: '#0d0d0d',
-  menu: '#FDEBD0',
+  menu: '#FEF5E7',
 }
