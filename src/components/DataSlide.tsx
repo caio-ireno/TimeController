@@ -1,3 +1,4 @@
+import { CalendarX } from 'phosphor-react-native'
 import React, { useState } from 'react'
 import { Text, View } from 'react-native'
 import SwipeGesture from 'react-native-swipe-gestures'
@@ -5,7 +6,7 @@ import SwipeGesture from 'react-native-swipe-gestures'
 import { useAppThemeContext } from '../context/ThemeContext'
 import { styles } from '../style/style'
 
-const MyComponent = () => {
+const DataSlide = () => {
   const [date, setDate] = useState(new Date())
   const { theme } = useAppThemeContext()
   const dynamicStyles = styles(theme)
@@ -70,7 +71,7 @@ const MyComponent = () => {
     <SwipeGesture
       onSwipe={gestureName => onSwipe(gestureName)}
       config={config}
-      style={{ flex: 1 }}
+      style={{ flex: 1, height: '100%' }}
     >
       <View style={{ alignItems: 'center' }}>
         <Text style={dynamicStyles.textBody}>{`${
@@ -79,8 +80,18 @@ const MyComponent = () => {
           mesesDoAno[date.getMonth()]
         } de ${date.getFullYear()}`}</Text>
       </View>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+        }}
+      >
+        <CalendarX size={100} color="#d9d9d9" />
+        <Text style={{ fontSize: 20, color: '#d9d9d9' }}>Nenhum Evento</Text>
+      </View>
     </SwipeGesture>
   )
 }
 
-export default MyComponent
+export default DataSlide

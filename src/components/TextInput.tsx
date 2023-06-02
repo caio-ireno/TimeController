@@ -14,7 +14,7 @@ export const TextInput: React.FC<MyInputProps> = ({ label, ...rest }) => {
     <View style={styles.container}>
       <NativeInput
         placeholder={label}
-        placeholderTextColor={'#000'}
+        placeholderTextColor={'#a9a'}
         style={styles.input}
         {...rest}
       />

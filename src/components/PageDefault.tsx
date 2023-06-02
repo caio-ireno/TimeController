@@ -24,7 +24,7 @@ export const PageDefault: React.FC<AppThemeProviderProps> = ({ children }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, height: '100%' }}>
       {children}
 
       {!keyboard.keyboardShown && (

@@ -4,7 +4,7 @@ import { Text, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 import Button from '../components/Button'
-import MyComponent from '../components/DataSlide'
+import DataSlide from '../components/DataSlide'
 import { PageDefault } from '../components/PageDefault'
 import { useAppThemeContext } from '../context/ThemeContext'
 import { styles } from '../style/style'
@@ -27,12 +27,12 @@ export function Home() {
         </View>
         <GestureHandlerRootView
           style={{
-            height: '100%',
+            height: '90%',
             width: '100%',
             marginTop: 20,
           }}
         >
-          <MyComponent />
+          <DataSlide />
         </GestureHandlerRootView>
       </View>
     </PageDefault>
