@@ -12,7 +12,12 @@ interface MyInputProps extends InputAccessoryViewProps {
 export const TextInput: React.FC<MyInputProps> = ({ label, ...rest }) => {
   return (
     <View style={styles.container}>
-      <NativeInput placeholder={label} style={styles.input} {...rest} />
+      <NativeInput
+        placeholder={label}
+        placeholderTextColor={'#000'}
+        style={styles.input}
+        {...rest}
+      />
     </View>
   )
 }
@@ -23,7 +28,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   input: {
-    borderColor: '#ccc',
     padding: 10,
   },
 })

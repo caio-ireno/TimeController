@@ -4,5 +4,5 @@ export const DarkTheme = {
   buttonBackground: '#ff8906',
   buttonText: '#0d0d0d',
   headers: '#fffffe',
-  menu: '#FDEBD0',
+  menu: '#F4F6F6 ',
 }
