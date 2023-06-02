@@ -6,15 +6,16 @@ import { styles } from '../style/style'
 
 interface ButtonProps extends TouchableOpacityProps {
   label: string
+  fontSize: number
 }
 
-export const Button: React.FC<ButtonProps> = ({ label, ...rest }) => {
+export const Button: React.FC<ButtonProps> = ({ label, fontSize, ...rest }) => {
   const { theme } = useAppThemeContext()
   const dynamicStyles = styles(theme)
 
   return (
     <TouchableOpacity style={dynamicStyles.button} {...rest}>
-      <Text style={dynamicStyles.buttonText}>{label}</Text>
+      <Text style={{ fontSize: fontSize }}>{label}</Text>
     </TouchableOpacity>
   )
 }

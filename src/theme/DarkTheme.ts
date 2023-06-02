@@ -1,8 +1,8 @@
 export const DarkTheme = {
-  backgroundColor: '#16161a',
+  backgroundColor: '#515A5A',
   textColor: '#a7a9be',
   buttonBackground: '#ff8906',
   buttonText: '#0d0d0d',
   headers: '#fffffe',
-  menu: '#F4F6F6 ',
+  menu: '#F4F6F6',
 }

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 
+import Button from '../components/Button'
 import { PageDefault } from '../components/PageDefault'
 import { useAppThemeContext } from '../context/ThemeContext'
 import { styles } from '../style/style'
@@ -12,8 +13,16 @@ export function Options() {
   return (
     <PageDefault>
       <View style={dynamicStyles.container}>
-        <Text style={dynamicStyles.textBody}>Options</Text>
-        <Button title="Theme" onPress={toggleTheme} />
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '90%',
+          }}
+        >
+          <Text style={{ fontSize: 20, color: theme.textColor }}>Tema</Text>
+          <Button label="Tema" fontSize={20} onPress={toggleTheme} />
+        </View>
       </View>
     </PageDefault>
   )

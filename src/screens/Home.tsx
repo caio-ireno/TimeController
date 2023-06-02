@@ -23,7 +23,7 @@ export function Home() {
       <View style={dynamicStyles.container}>
         <View style={dynamicStyles.header}>
           <Text style={dynamicStyles.textHeader}>Agenda</Text>
-          <Button label="+" onPress={handleNew} />
+          <Button label="+" fontSize={32} onPress={handleNew} />
         </View>
         <GestureHandlerRootView
           style={{
