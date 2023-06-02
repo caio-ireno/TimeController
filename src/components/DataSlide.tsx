@@ -1,13 +1,29 @@
 import { CalendarX } from 'phosphor-react-native'
-import React, { useState } from 'react'
-import { Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Alert, Text, View } from 'react-native'
 import SwipeGesture from 'react-native-swipe-gestures'
 
 import { useAppThemeContext } from '../context/ThemeContext'
+import { getRealm } from '../dataBases/realm'
 import { styles } from '../style/style'
+import { CardEvent } from './CardEvent'
 
+export interface OrderType {
+  _id: string
+  paciente: string
+  sala: string
+  prontuario: string
+  queixa: string
+  data: string
+  inicio: string
+  fim: string
+  color: string
+  created_at: string
+}
 const DataSlide = () => {
   const [date, setDate] = useState(new Date())
+  const [arrayOrder, setArrayOrder] = useState<OrderType[]>([])
+  const [noEvent, setNoEvent] = useState(true)
   const { theme } = useAppThemeContext()
   const dynamicStyles = styles(theme)
   const diasDaSemana = [
@@ -49,8 +65,6 @@ const DataSlide = () => {
     setDate(previousDate)
   }
 
-  console.log(date.toLocaleDateString(), date.getDay())
-
   const config = {
     velocityThreshold: 0.3,
     directionalOffsetThreshold: 80,
@@ -67,6 +81,53 @@ const DataSlide = () => {
     }
   }
 
+  const fetchOrder = async () => {
+    const realm = await getRealm()
+    const year = date.getFullYear()
+    const month = (1 + date.getMonth()).toString().padStart(2, '0') // Adiciona zero à frente do mês se for menor que 9
+    const day = date.getDate().toString().padStart(2, '0') // Adiciona zero à frente do dia se for menor que 9
+    const formattedDate = `${year}-${month}-${day}`
+    try {
+      const response = realm
+        .objects<OrderType[]>('Order')
+        .filtered(`data = '${formattedDate}'`)
+        .toJSON()
+
+      const convertedResponse = response.map(
+        (order: Record<string, unknown>) => {
+          const convertedOrder: OrderType = {
+            _id: order._id as string,
+            paciente: order.paciente as string,
+            sala: order.sala as string,
+            prontuario: order.prontuario as string,
+            queixa: order.queixa as string,
+            data: order.data as string,
+            inicio: order.inicio as string,
+            fim: order.fim as string,
+            color: order.color as string,
+            created_at: order.created_at as string,
+          }
+          return convertedOrder
+        },
+      )
+      if (convertedResponse.length === 0) {
+        setNoEvent(true)
+      } else {
+        setNoEvent(false)
+      }
+      setArrayOrder(convertedResponse)
+    } catch {
+      Alert.alert('Evento', 'não foi possivel carregar')
+    } finally {
+      realm.close()
+    }
+  }
+
+  useEffect(() => {
+    fetchOrder()
+  }, [date])
+
+  console.log(noEvent)
   return (
     <SwipeGesture
       onSwipe={gestureName => onSwipe(gestureName)}
@@ -82,14 +143,37 @@ const DataSlide = () => {
       </View>
       <View
         style={{
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100%',
+          paddingTop: 20,
         }}
       >
-        <CalendarX size={100} color="#d9d9d9" />
-        <Text style={{ fontSize: 20, color: '#d9d9d9' }}>Nenhum Evento</Text>
+        {arrayOrder.map(order => {
+          return (
+            <CardEvent
+              key={order._id}
+              color={order.color}
+              inicio={order.inicio}
+              fim={order.fim}
+              paciente={order.paciente}
+            />
+          )
+        })}
       </View>
+
+      {noEvent && (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+          }}
+        >
+          <CalendarX size={100} color="#d9d9d9" />
+          <Text style={{ fontSize: 20, color: '#d9d9d9' }}>Nenhum Evento</Text>
+        </View>
+      )}
     </SwipeGesture>
   )
 }

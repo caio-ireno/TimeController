@@ -60,6 +60,7 @@ export function New() {
       realm.close()
     }
   }
+
   return (
     <PageDefault>
       <View style={dynamicStyles.container}>
@@ -73,7 +74,11 @@ export function New() {
             paddingBottom: 20,
           }}
         >
-          <TouchableOpacity onPress={handleHome}>
+          <TouchableOpacity
+            onPress={() => {
+              handleHome()
+            }}
+          >
             <ArrowLeft size={32} />
           </TouchableOpacity>
           <TouchableOpacity
