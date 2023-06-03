@@ -34,6 +34,7 @@ export const ModalData: React.FC<ModalDataProps> = ({
         style={{
           justifyContent: 'center',
           alignItems: 'center',
+          height: '100%',
         }}
       >
         <View

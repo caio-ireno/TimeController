@@ -1,5 +1,6 @@
+import { useFocusEffect } from '@react-navigation/native'
 import { CalendarX } from 'phosphor-react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Alert, Text, View } from 'react-native'
 import SwipeGesture from 'react-native-swipe-gestures'
 
@@ -116,16 +117,19 @@ const DataSlide = () => {
         setNoEvent(false)
       }
       setArrayOrder(convertedResponse)
-    } catch {
+    } catch (error) {
+      console.log(error)
       Alert.alert('Evento', 'não foi possivel carregar')
     } finally {
       realm.close()
     }
   }
 
-  useEffect(() => {
-    fetchOrder()
-  }, [date])
+  useFocusEffect(
+    useCallback(() => {
+      fetchOrder()
+    }, [date]),
+  )
 
   console.log(noEvent)
   return (
@@ -150,6 +154,8 @@ const DataSlide = () => {
         }}
       >
         {arrayOrder.map(order => {
+          const newData = order.data.split('-')
+          const newDateFormat = newData[2] + '-' + newData[1] + '-' + newData[0]
           return (
             <CardEvent
               key={order._id}
@@ -157,6 +163,11 @@ const DataSlide = () => {
               inicio={order.inicio}
               fim={order.fim}
               paciente={order.paciente}
+              data={newDateFormat}
+              prontuario={order.prontuario}
+              queixa={order.queixa}
+              sala={order.sala}
+              _id={order._id}
             />
           )
         })}
