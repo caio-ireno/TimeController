@@ -1,13 +1,14 @@
 import { useFocusEffect } from '@react-navigation/native'
 import { CalendarX } from 'phosphor-react-native'
 import React, { useCallback, useState } from 'react'
-import { Alert, Text, View } from 'react-native'
+import { Alert, Text, TouchableOpacity, View } from 'react-native'
 import SwipeGesture from 'react-native-swipe-gestures'
 
 import { useAppThemeContext } from '../context/ThemeContext'
 import { getRealm } from '../dataBases/realm'
 import { styles } from '../style/style'
 import { CardEvent } from './CardEvent'
+import { ModalData } from './ModalData'
 
 export interface OrderType {
   _id: string
@@ -24,6 +25,7 @@ export interface OrderType {
 const DataSlide = () => {
   const [date, setDate] = useState(new Date())
   const [arrayOrder, setArrayOrder] = useState<OrderType[]>([])
+  const [modalCalendar, setModalCalendar] = useState(false)
   const [noEvent, setNoEvent] = useState(true)
   const { theme } = useAppThemeContext()
   const dynamicStyles = styles(theme)
@@ -138,13 +140,18 @@ const DataSlide = () => {
       config={config}
       style={{ flex: 1, height: '100%' }}
     >
-      <View style={{ alignItems: 'center' }}>
+      <TouchableOpacity
+        style={{ alignItems: 'center' }}
+        onPress={() => {
+          setModalCalendar(true)
+        }}
+      >
         <Text style={dynamicStyles.textBody}>{`${
           diasDaSemana[date.getDay()]
         }, ${date.getDate()} de ${
           mesesDoAno[date.getMonth()]
         } de ${date.getFullYear()}`}</Text>
-      </View>
+      </TouchableOpacity>
       <View
         style={{
           flexDirection: 'column',
@@ -153,6 +160,10 @@ const DataSlide = () => {
           paddingTop: 20,
         }}
       >
+        <ModalData
+          visible={modalCalendar}
+          VisibleChange={() => setModalCalendar(!modalCalendar)}
+        />
         {arrayOrder.map(order => {
           const newData = order.data.split('-')
           const newDateFormat = newData[2] + '-' + newData[1] + '-' + newData[0]
